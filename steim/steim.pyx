@@ -32,4 +32,4 @@ def decode_steim2(int64_t samplecount, int32_t[:] enc):
     cdef int swapflag = 0
     msr_decode_steim2(&buf[0], buf.size, samplecount, &dec[0], dec.size, &sid, 
                       swapflag)
-    return np.asarray(enc)
+    return np.asarray(dec)

@@ -1,3 +1,5 @@
 *.o
+*.pyc
 *.so
+/steim.egg-info
 steim/steim.c
