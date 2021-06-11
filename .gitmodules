@@ -1,3 +1,0 @@
-[submodule "libmseed"]
-	path = libmseed
-	url = https://github.com/iris-edu/libmseed
