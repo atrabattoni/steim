@@ -10,7 +10,7 @@ cimport numpy as np
 from csteim cimport msr_decode_steim2, msr_encode_steim2
 
 
-def encode_steim2(int32_t[:] arr):
+def encode_steim2(const int32_t[:] arr):
 
     # Allocate buffer
     cdef int32_t[:] buf = view.array(shape=(1 + 4 * arr.size,),
@@ -40,7 +40,7 @@ def encode_steim2(int32_t[:] arr):
     return enc
 
 
-def decode_steim2(int32_t[:] enc):
+def decode_steim2(const int32_t[:] enc):
 
     # Read header
     cdef int64_t samplecount = enc[0]
