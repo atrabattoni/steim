@@ -17,28 +17,28 @@ def encode_steim2(int32_t[:] arr):
         raise(MemoryError("Inputted array is to big"))
 
     # Allocate buffer
-    cdef int32_t[:] buf = view.array(shape=(1 + 4*arr.size,), 
+    cdef int32_t[:] buf = view.array(shape=(1 + 4*arr.size,),
                                      itemsize=sizeof(int32_t), format="i")
 
-    # Declare C wrappings 
+    # Declare C wrappings
     cdef int32_t *input_ptr = &arr[0]
     cdef int samplecount = arr.size
-    cdef int32_t *output_ptr = &buf[1],
+    cdef int32_t *output_ptr = &buf[1]
     cdef int outputlength = buf.size - 1
     cdef int32_t diff0 = 0
     cdef uint16_t byteswritten = 0
-    cdef char sid 
+    cdef char sid
     cdef int swapflag = 0
 
     # Compute
     with nogil:
         msr_encode_steim2(input_ptr, samplecount, output_ptr, outputlength,
                           diff0, &byteswritten, &sid, swapflag)
-    
-    # Write header
-    buf[0] = samplecount  
 
-    # Get computed data                         
+    # Write header
+    buf[0] = samplecount
+
+    # Get computed data
     enc = buf[:1+byteswritten//sizeof(int32_t)]
 
     return enc
@@ -56,12 +56,12 @@ def decode_steim2(int32_t[:] enc):
                                      itemsize=sizeof(int32_t), format="i")
     buf[:enc.size - 1] = enc[1:]
 
-    # Declare C wrappings 
+    # Declare C wrappings
     cdef int32_t *input_ptr = &buf[0]
     cdef int inputlength = buf.size
-    cdef int32_t *output_ptr = &dec[0],
+    cdef int32_t *output_ptr = &dec[0]
     cdef int outputlength = dec.size
-    cdef char sid 
+    cdef char sid
     cdef int swapflag = 0
 
     # Compute
