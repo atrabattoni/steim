@@ -1,5 +1,5 @@
 # Cython
-from libc.stdint cimport int32_t, int64_t, uint16_t, UINT16_MAX
+from libc.stdint cimport int32_t, int64_t, uint32_t, UINT32_MAX
 from cython cimport view
 
 # Numpy
@@ -13,7 +13,7 @@ from csteim cimport msr_decode_steim2, msr_encode_steim2
 def encode_steim2(int32_t[:] arr):
 
     # Check input size
-    if arr.size > ((UINT16_MAX + 1) // sizeof(int32_t)):
+    if arr.size > ((UINT32_MAX + 1) // sizeof(int32_t)):
         raise(MemoryError("Inputted array is to big"))
 
     # Allocate buffer
@@ -26,7 +26,7 @@ def encode_steim2(int32_t[:] arr):
     cdef int32_t *output_ptr = &buf[1]
     cdef int outputlength = buf.size - 1
     cdef int32_t diff0 = 0
-    cdef uint16_t byteswritten = 0
+    cdef uint32_t byteswritten = 0
     cdef char sid
     cdef int swapflag = 0
 
